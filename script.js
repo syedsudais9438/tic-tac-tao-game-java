@@ -16,6 +16,7 @@ let winningPattern = [
         [0,4,8],
         [1,4,7],
         [2,5,8],
+        [2,4,6],
         [3,4,5],
         [6,7,8],
 ];
@@ -71,7 +72,7 @@ const showWinnerMsg = (player) =>{
     WinningMsg.innerText = `Congratulation! Player  ${player}  is the winner`;
     MsgContainer.classList.remove("hide"); // it show the winner msg box
     disabledBoxes(); // calling disabled function here.....
-
+document.body.style.overflow = "hidden";
 }
 
 
@@ -99,8 +100,22 @@ const resetFunction = () =>{
     turnO = true;
     enableBoxes();
     MsgContainer.classList.add("hide");
-
+document.body.style.overflow = "auto"; 
 }
 
 newGame.addEventListener("click", resetFunction);  // reset function calling for new game button 
 resetBtn.addEventListener("click",resetFunction);  // reset function calling for Reset Game button
+boxes.forEach(box => {
+    box.addEventListener("click", () => {
+        if(turnO){
+            box.innerText = "O";
+            box.classList.add("glowO");
+        } else {
+            box.innerText = "X";
+            box.classList.add("glowX");
+        }
+        box.classList.add("clicked"); // add pop animation
+        box.disabled = true;
+        checkWinner();
+    });
+});
